@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { allShayaris } from '../data/shayariData';
 import { categories } from '../data/categories';
 import { useLanguage } from '../context/LanguageContext';
+import { ThreeDTilt } from './ThreeDTilt';
 import { FaSearch, FaTimes, FaFeatherAlt, FaArrowRight } from 'react-icons/fa';
 
 export const GlobalSearchModal = ({ isOpen, onClose }) => {
@@ -63,10 +64,13 @@ export const GlobalSearchModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-16 md:pt-24 p-4 bg-black/80 backdrop-blur-md">
-      <div className="relative w-full max-w-3xl rounded-3xl bg-[#1C1520] border border-[#D5AD70]/40 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
-        {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-[#D5AD70]/20 bg-[#241A24]/70">
+    <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-16 md:pt-24 p-4 bg-black/85 backdrop-blur-md perspective-1500">
+      <div className="relative w-full max-w-3xl rounded-3xl bg-[#1C1520]/95 border border-[#D5AD70]/40 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] preserve-3d animate-in fade-in zoom-in-95 duration-200">
+        {/* Search Input Bar in 3D */}
+        <div
+          className="flex items-center gap-3 px-6 py-5 border-b border-[#D5AD70]/20 bg-[#241A24]/80 preserve-3d"
+          style={{ transform: 'translateZ(15px)' }}
+        >
           <FaSearch className="text-[#D5AD70] text-lg flex-shrink-0" />
           <input
             ref={inputRef}
@@ -92,8 +96,11 @@ export const GlobalSearchModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Filter Chips Bar */}
-        <div className="px-6 py-3 border-b border-[#D5AD70]/10 bg-[#17121C]/80 flex items-center justify-between flex-wrap gap-2 text-xs">
+        {/* Filter Chips Bar in 3D */}
+        <div
+          className="px-6 py-3 border-b border-[#D5AD70]/10 bg-[#17121C]/85 flex items-center justify-between flex-wrap gap-2 text-xs preserve-3d"
+          style={{ transform: 'translateZ(10px)' }}
+        >
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
             <button
               onClick={() => setSelectedCat('all')}
@@ -168,31 +175,32 @@ export const GlobalSearchModal = ({ isOpen, onClose }) => {
             filteredShayaris.slice(0, 40).map((item) => {
               const text = item.content[language] || item.content.hi;
               return (
-                <div
-                  key={item.id}
-                  onClick={() => handleSelectShayari(item.id)}
-                  className="group p-4 rounded-2xl bg-[#241A24]/60 border border-[#D5AD70]/15 hover:border-[#D5AD70]/50 hover:bg-[#713B4A]/25 transition-all cursor-pointer flex items-center justify-between gap-4"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-[#713B4A]/50 text-[#F2DCC8] border border-[#D5AD70]/20">
-                        {item.category}
-                      </span>
-                      <span className="text-[10px] text-[#B8A8A5]">
-                        {item.type === '2-lines' ? '2 Lines' : '4 Lines'}
-                      </span>
+                <ThreeDTilt key={item.id} maxTilt={8} scale={1.015} className="w-full">
+                  <div
+                    onClick={() => handleSelectShayari(item.id)}
+                    className="group p-4 rounded-2xl bg-[#241A24]/75 border border-[#D5AD70]/15 hover:border-[#D5AD70]/60 hover:bg-[#713B4A]/30 transition-all cursor-pointer flex items-center justify-between gap-4 preserve-3d"
+                  >
+                    <div className="flex-1 min-w-0 preserve-3d" style={{ transform: 'translateZ(15px)' }}>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-[#713B4A]/50 text-[#F2DCC8] border border-[#D5AD70]/20">
+                          {item.category}
+                        </span>
+                        <span className="text-[10px] text-[#B8A8A5]">
+                          {item.type === '2-lines' ? '2 Lines' : '4 Lines'}
+                        </span>
+                      </div>
+                      <p
+                        className={`${getShayariFontClass()} text-[#FFF9F3] text-sm md:text-base line-clamp-2 leading-relaxed`}
+                      >
+                        {text}
+                      </p>
+                      <div className="mt-1 font-serif italic text-xs text-[#D5AD70]/80">
+                        ~ {item.author || 'Anonymous'}
+                      </div>
                     </div>
-                    <p
-                      className={`${getShayariFontClass()} text-[#FFF9F3] text-sm md:text-base line-clamp-2 leading-relaxed`}
-                    >
-                      {text}
-                    </p>
-                    <div className="mt-1 font-serif italic text-xs text-[#D5AD70]/80">
-                      ~ {item.author || 'Anonymous'}
-                    </div>
+                    <FaArrowRight className="text-[#D5AD70] opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all flex-shrink-0" />
                   </div>
-                  <FaArrowRight className="text-[#D5AD70] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0" />
-                </div>
+                </ThreeDTilt>
               );
             })
           )}

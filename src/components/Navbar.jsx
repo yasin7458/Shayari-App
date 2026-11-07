@@ -56,13 +56,15 @@ export const Navbar = ({ onOpenSearch, onOpenRandom }) => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group focus:outline-none">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#713B4A] to-[#241A24] border border-[#D5AD70]/40 flex items-center justify-center shadow-gold-glow group-hover:scale-105 transition-transform duration-200">
-                <span className="font-serif text-xl font-bold text-[#F2DCC8]">श</span>
+            {/* 3D Interactive Logo */}
+            <Link to="/" className="flex items-center gap-3 group focus:outline-none perspective-1000">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#713B4A] to-[#241A24] border border-[#D5AD70]/40 flex items-center justify-center shadow-gold-glow group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 preserve-3d">
+                <span className="font-serif text-xl font-bold text-[#F2DCC8] drop-shadow-sm" style={{ transform: 'translateZ(10px)' }}>
+                  श
+                </span>
               </div>
               <div className="flex flex-col">
-                <span className="font-display text-xl md:text-2xl font-bold tracking-[0.2em] uppercase gold-text-gradient">
+                <span className="font-display text-xl md:text-2xl font-bold tracking-[0.2em] uppercase gold-text-gradient group-hover:tracking-[0.25em] transition-all duration-300">
                   SHAYARANA
                 </span>
                 <span className="text-[10px] tracking-widest text-[#B8A8A5] -mt-1 font-serif italic hidden sm:block">
@@ -71,23 +73,23 @@ export const Navbar = ({ onOpenSearch, onOpenRandom }) => {
               </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
+            {/* Desktop Navigation Links with 3D tactile lift */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                    `relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 hover:-translate-y-0.5 active:translate-y-0 ${
                       isActive
-                        ? 'text-[#FFF9F3] bg-[#713B4A]/60 border border-[#D5AD70]/50 shadow-sm'
+                        ? 'text-[#FFF9F3] bg-[#713B4A]/60 border border-[#D5AD70]/50 shadow-gold-glow'
                         : 'text-[#B8A8A5] hover:text-[#F2DCC8] hover:bg-[#241A24]/60'
                     }`
                   }
                 >
                   {link.label}
                   {link.badge > 0 && (
-                    <span className="w-5 h-5 rounded-full bg-[#713B4A] border border-[#D5AD70]/60 text-[10px] font-bold text-[#F2DCC8] flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-[#713B4A] border border-[#D5AD70]/60 text-[10px] font-bold text-[#F2DCC8] flex items-center justify-center shadow-sm">
                       {link.badge}
                     </span>
                   )}
@@ -95,14 +97,14 @@ export const Navbar = ({ onOpenSearch, onOpenRandom }) => {
               ))}
             </nav>
 
-            {/* Right Action Icons & Controls */}
+            {/* Right Action Icons & Controls with 3D elevation */}
             <div className="flex items-center gap-2 sm:gap-3">
               {/* Global Search Button */}
               <button
                 type="button"
                 onClick={onOpenSearch}
                 aria-label="Search"
-                className="p-2.5 rounded-full bg-[#241A24]/70 border border-[#D5AD70]/25 text-[#F2DCC8] hover:text-[#FFF9F3] hover:border-[#D5AD70]/60 hover:bg-[#713B4A]/40 transition-all focus:outline-none"
+                className="p-2.5 rounded-full bg-[#241A24]/75 border border-[#D5AD70]/25 text-[#F2DCC8] hover:text-[#FFF9F3] hover:border-[#D5AD70]/60 hover:bg-[#713B4A]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all focus:outline-none shadow-sm"
                 title="Search (Ctrl + K)"
               >
                 <FaSearch className="text-sm" />
@@ -113,10 +115,10 @@ export const Navbar = ({ onOpenSearch, onOpenRandom }) => {
                 type="button"
                 onClick={onOpenRandom}
                 aria-label="Random Shayari"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#713B4A]/30 border border-[#D5AD70]/30 text-[#F2DCC8] hover:bg-[#713B4A]/70 hover:border-[#D5AD70] transition-all text-xs font-medium focus:outline-none"
+                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#713B4A]/30 border border-[#D5AD70]/30 text-[#F2DCC8] hover:bg-[#713B4A]/70 hover:border-[#D5AD70] hover:-translate-y-0.5 active:translate-y-0 transition-all text-xs font-medium focus:outline-none shadow-sm group"
                 title="Surprise Verse"
               >
-                <FaDice className="text-sm text-[#D5AD70]" />
+                <FaDice className="text-sm text-[#D5AD70] group-hover:rotate-180 transition-transform duration-500" />
                 <span>{t('hero.randomBtn') || 'Random'}</span>
               </button>
 
@@ -154,7 +156,7 @@ export const Navbar = ({ onOpenSearch, onOpenRandom }) => {
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-[#D5AD70]/20">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-[#713B4A] border border-[#D5AD70]/40 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-xl bg-[#713B4A] border border-[#D5AD70]/40 flex items-center justify-center shadow-gold-glow">
                     <span className="font-serif font-bold text-[#F2DCC8]">श</span>
                   </div>
                   <span className="font-display font-bold tracking-widest text-[#F2DCC8] uppercase">

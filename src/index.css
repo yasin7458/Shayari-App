@@ -49,7 +49,44 @@
   }
 }
 
-/* Glassmorphism & Luxury Cards */
+/* 3D Transform & Perspective Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+  -webkit-perspective: 1500px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+.translate-z-30 {
+  transform: translateZ(30px);
+}
+.translate-z-40 {
+  transform: translateZ(40px);
+}
+.translate-z-50 {
+  transform: translateZ(50px);
+}
+
+/* 3D Glassmorphism & Luxury Cards */
 .glass-panel {
   background: rgba(36, 26, 36, 0.65);
   backdrop-filter: blur(16px);
@@ -72,6 +109,39 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(213, 173, 112, 0.3);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(213, 173, 112, 0.15);
+}
+
+/* 3D Floating Animations */
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotateX(3deg) rotateY(-3deg);
+  }
+  50% {
+    transform: translateY(-14px) rotateX(0deg) rotateY(4deg);
+  }
+  75% {
+    transform: translateY(-6px) rotateX(-3deg) rotateY(2deg);
+  }
+}
+
+.animate-float-3d {
+  animation: float3D 6s ease-in-out infinite;
+}
+
+@keyframes spin3D {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg);
+  }
+}
+
+.animate-spin-3d {
+  animation: spin3D 18s linear infinite;
 }
 
 /* Golden Gradient Text */
@@ -139,6 +209,26 @@
   opacity: 1;
   width: 20px;
   height: 20px;
+}
+
+/* 3D Card Sheen effect */
+.sheen-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(213, 173, 112, 0.18) 0%,
+    rgba(242, 220, 200, 0.05) 30%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.group:hover .sheen-overlay {
+  opacity: 1;
 }
 
 /* Custom subtle desktop cursor */
